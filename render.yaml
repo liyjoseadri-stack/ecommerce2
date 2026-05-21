@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: ecommerce2
+    env: php
+    plan: free
+    buildCommand: >
+      composer install --no-dev --optimize-autoloader &&
+      npm install --omit=dev &&
+      npm run build
+    startCommand: "vendor/bin/heroku-php-apache2 public/"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        scope: project
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/data/database.sqlite
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+    preDeployCommand: >
+      php artisan migrate --force &&
+      php artisan db:seed --force || true &&
+      php artisan cache:clear &&
+      php artisan config:clear &&
+      php artisan route:clear &&
+      php artisan view:clear
+    disk:
+      name: sqlite_storage
+      mountPath: /var/data
+      sizeGB: 5
