@@ -1,13 +1,9 @@
 services:
   - type: web
     name: ecommerce2
-    env: php
-    plan: free
-    buildCommand: >
-      composer install --no-dev --optimize-autoloader &&
-      npm install --omit=dev &&
-      npm run build
-    startCommand: "vendor/bin/heroku-php-apache2 public/"
+    env: docker
+    region: oregon
+    branch: main
     envVars:
       - key: APP_ENV
         value: production
@@ -16,9 +12,17 @@ services:
       - key: APP_KEY
         scope: project
       - key: DB_CONNECTION
-        value: sqlite
+        value: mysql
+      - key: DB_HOST
+        value: gateway01.us-east-1.prod.aws.tidbcloud.com
+      - key: DB_PORT
+        value: "4000"
       - key: DB_DATABASE
-        value: /var/data/database.sqlite
+        value: sys
+      - key: DB_USERNAME
+        scope: project
+      - key: DB_PASSWORD
+        scope: project
       - key: SESSION_DRIVER
         value: database
       - key: CACHE_STORE
@@ -32,7 +36,3 @@ services:
       php artisan config:clear &&
       php artisan route:clear &&
       php artisan view:clear
-    disk:
-      name: sqlite_storage
-      mountPath: /var/data
-      sizeGB: 5
