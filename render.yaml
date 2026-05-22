@@ -36,7 +36,7 @@ services:
       - key: SESSION_DRIVER
         value: database
       - key: LOG_CHANNEL
-        value: stack
+        value: stderr
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST
