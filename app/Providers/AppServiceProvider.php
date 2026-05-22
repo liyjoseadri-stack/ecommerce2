@@ -45,8 +45,13 @@ class AppServiceProvider extends ServiceProvider
             return new class extends \Symfony\Component\Mailer\Transport\AbstractTransport {
                 protected function doSend(\Symfony\Component\Mailer\SentMessage $message): void
                 {
-                    $email = \Illuminate\Mail\Message::fromString($message->toString());
+                    // Obtenemos el mensaje original compatible con Symfony Mailer
+                    $symfonyMessage = $message->getOriginalMessage();
                     
+                    // Extraemos el cuerpo del mensaje de forma segura
+                    $htmlBody = $symfonyMessage->getHtmlBody();
+                    $textBody = $symfonyMessage->getTextBody();
+
                     $client = new Client();
                     $client->post('https://api.brevo.com/v3/smtp/email', [
                         'headers' => [
@@ -59,11 +64,11 @@ class AppServiceProvider extends ServiceProvider
                                 'name' => env('MAIL_FROM_NAME', 'MecaMensajeria'),
                                 'email' => env('MAIL_FROM_ADDRESS')
                             ],
-                            'to' => collect($email->getTo())->map(function ($name, $address) {
-                                return ['email' => $address];
+                            'to' => collect($symfonyMessage->getTo())->map(function ($address) {
+                                return ['email' => $address->getAddress()];
                             })->values()->toArray(),
-                            'subject' => $email->getSubject(),
-                            'htmlContent' => $email->getHtmlBody() ?? $email->getTextBody(),
+                            'subject' => $symfonyMessage->getSubject(),
+                            'htmlContent' => $htmlBody ?? $textBody ?? 'Tu código de verificación 2FA',
                         ],
                     ]);
                 }
