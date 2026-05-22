@@ -25,8 +25,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar ALL dependencies (incluyendo devDependencies para build)
-RUN npm install
+# Limpiar cache de npm y instalar dependencies
+RUN npm cache clean --force && npm install
 
 # Compilar assets con Vite ANTES de copiar el resto
 RUN npm run build
