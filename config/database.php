@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Str;
-use PDO;
 
 return [
 
@@ -59,14 +58,10 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => env('DB_SSLMODE') === 'require' ? [
-                PDO::MYSQL_ATTR_SSL_KEY => null,
-                PDO::MYSQL_ATTR_SSL_CERT => null,
-                PDO::MYSQL_ATTR_SSL_CA => null,
-                PDO::MYSQL_ATTR_SSL_CAPATH => null,
-                PDO::MYSQL_ATTR_SSL_CIPHER => null,
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-            ] : [],
+            'options' => [
+                \PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                \PDO::MYSQL_ATTR_SSL_CA => null,
+            ],
         ],
 
         'mariadb' => [
