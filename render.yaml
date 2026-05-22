@@ -46,7 +46,7 @@ services:
       - key: MAIL_USERNAME
         value: ac3c33001@smtp-brevo.com
       - key: MAIL_PASSWORD
-        value: xsmtpsib-dc46e078f138f07bed59e83c13be84de9d741b96823d02adab8b581c73de9249-HqeBoXziazkYWHRZ
+        value: MAIL_PASSWORD
       - key: MAIL_ENCRYPTION
         value: tls
       - key: MAIL_FROM_ADDRESS
