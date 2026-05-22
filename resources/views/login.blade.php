@@ -10,9 +10,9 @@
     <div class="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4">
         <div class="grid w-full overflow-hidden rounded-3xl bg-white shadow-2xl lg:grid-cols-[1.1fr_0.9fr]">
             <section class="hidden bg-slate-900 p-12 text-white lg:block">
-                <p class="mb-4 text-sm uppercase tracking-[0.3em] text-cyan-300">Laravel</p>
-                <h1 class="text-4xl font-bold leading-tight">Controla productos, categorias y ventas con roles y policies.</h1>
-                <p class="mt-6 text-slate-300">Accede con tu usuario para administrar el sistema o comprar productos segun tu rol.</p>
+                <p class="mb-4 text-sm uppercase tracking-[0.3em] text-cyan-300">TechStore</p>
+                <h1 class="text-4xl font-bold leading-tight">Bienvenido a TechStore</h1>
+                <p class="mt-6 text-slate-300">Tu tienda online de tecnologia de confianza.</p>
             </section>
 
             <section class="p-8 sm:p-12">
