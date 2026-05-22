@@ -38,21 +38,21 @@ services:
       - key: LOG_CHANNEL
         value: stderr
       - key: MAIL_MAILER
-        value: log # Render Free tier blocks SMTP ports (587, 465). Using 'log' writes emails to Render dashboard logs.
+        value: smtp
       - key: MAIL_HOST
-        value: smtp.gmail.com
+        value: smtp-relay.brevo.com
       - key: MAIL_PORT
         value: "587"
       - key: MAIL_USERNAME
-        scope: project # Tu MAIL_USERNAME: liy.jose.adri@gmail.com
+        value: ac3c33001@smtp-brevo.com
       - key: MAIL_PASSWORD
-        scope: project # Tu MAIL_PASSWORD: utcsvkqzaotjsbrr
+        value: xsmtpsib-dc46e078f138f07bed59e83c13be84de9d741b96823d02adab8b581c73de9249-HqeBoXziazkYWHRZ
       - key: MAIL_ENCRYPTION
         value: tls
       - key: MAIL_FROM_ADDRESS
         value: liy.jose.adri@gmail.com
       - key: MAIL_FROM_NAME
-        value: "${APP_NAME}"
+        value: MecaMensajeria
     preDeployCommand: >
       php artisan migrate:fresh --seed --force &&
       php artisan cache:clear &&
