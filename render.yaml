@@ -10,7 +10,11 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_KEY
-        scope: project
+        scope: project # Tu APP_KEY: base64:w0Dh4JMn5S9CgynbkL46Ns+V9S8AXYG0UGsKHnCV43g=
+      - key: APP_NAME
+        value: E-Commerce
+      - key: APP_URL
+        value: https://tu-app-name.render.com # Asegúrate de que esta URL sea la de tu servicio en Render.
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
@@ -20,33 +24,35 @@ services:
       - key: DB_DATABASE
         value: ecommerce_db
       - key: DB_USERNAME
-        scope: project
+        scope: project # Tu DB_USERNAME: 3Xsa1BX9gtxfW9N.root
       - key: DB_PASSWORD
-        scope: project
+        scope: project # Tu DB_PASSWORD: CRlJucEdYYHDW4IN
       - key: DB_SSLMODE
         value: require
-      - key: SESSION_DRIVER
-        value: database
       - key: CACHE_STORE
         value: database
       - key: QUEUE_CONNECTION
         value: database
+      - key: SESSION_DRIVER
+        value: database
+      - key: LOG_CHANNEL
+        value: stack
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST
-        value: your_mail_host # ¡ACTUALIZA ESTO! e.g., smtp.mailtrap.io
+        value: smtp.gmail.com
       - key: MAIL_PORT
-        value: "587" # ¡ACTUALIZA ESTO! e.g., 2525 o 587
+        value: "587"
       - key: MAIL_USERNAME
-        scope: project # ¡ACTUALIZA ESTO en Render!
+        scope: project # Tu MAIL_USERNAME: liy.jose.adri@gmail.com
       - key: MAIL_PASSWORD
-        scope: project # ¡ACTUALIZA ESTO en Render!
+        scope: project # Tu MAIL_PASSWORD: utcsvkqzaotjsbrr
       - key: MAIL_ENCRYPTION
-        value: tls # O ssl, dependiendo de tu proveedor
+        value: tls
       - key: MAIL_FROM_ADDRESS
-        value: noreply@example.com # ¡ACTUALIZA ESTO!
+        value: liy.jose.adri@gmail.com
       - key: MAIL_FROM_NAME
-        value: "${APP_NAME}" # O el nombre que desees
+        value: "${APP_NAME}"
     preDeployCommand: >
       php artisan migrate:fresh --seed --force &&
       php artisan cache:clear &&
