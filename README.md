@@ -39,8 +39,8 @@ Sistema de comercio electrónico desarrollado con **Laravel 12**, implementando 
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/NelsonPDev/ecommerce.git
-cd ecommerce
+git clone https://github.com/liyjoseadri-stack/ecommerce2.git
+cd ecommerce2
 ```
 
 ### 2. Instalar Dependencias
@@ -225,7 +225,7 @@ El repositorio incluye `.github/workflows/laravel.yml` que:
 
 El despliegue continuo se configura en Render mediante `render.yaml` y auto-deploy desde la rama `main`.
 
-Ver estado: https://github.com/NelsonPDev/ecommerce/actions
+Ver estado: https://github.com/liyjoseadri-stack/ecommerce2/actions
 
 ## 📂 Estructura del Proyecto
 
