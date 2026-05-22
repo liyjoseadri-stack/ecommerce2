@@ -10,11 +10,11 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_KEY
-        scope: project # Tu APP_KEY: base64:w0Dh4JMn5S9CgynbkL46Ns+V9S8AXYG0UGsKHnCV43g=
+        sync: false # Gestionado en el dashboard de Render
       - key: APP_NAME
         value: E-Commerce
       - key: APP_URL
-        value: https://tu-app-name.render.com # Asegúrate de que esta URL sea la de tu servicio en Render.
+        value: https://ecommerce2-zt8z.onrender.com # Asegúrate de que esta URL sea la de tu servicio en Render.
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
@@ -24,9 +24,9 @@ services:
       - key: DB_DATABASE
         value: ecommerce_db
       - key: DB_USERNAME
-        scope: project # Tu DB_USERNAME: 3Xsa1BX9gtxfW9N.root
+        value: 3Xsa1BX9gtxfW9N.root
       - key: DB_PASSWORD
-        scope: project # Tu DB_PASSWORD: CRlJucEdYYHDW4IN
+        sync: false # Gestionado en el dashboard de Render
       - key: DB_SSLMODE
         value: require
       - key: CACHE_STORE
@@ -46,7 +46,7 @@ services:
       - key: MAIL_USERNAME
         value: ac3c33001@smtp-brevo.com
       - key: MAIL_PASSWORD
-        value: MAIL_PASSWORD
+        sync: false # Gestionado en el dashboard de Render
       - key: MAIL_ENCRYPTION
         value: tls
       - key: MAIL_FROM_ADDRESS
