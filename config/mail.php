@@ -56,10 +56,6 @@ return [
 
         'postmark' => [
             'transport' => 'postmark',
-            // 'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
         ],
 
         'resend' => [
@@ -96,6 +92,11 @@ return [
                 'postmark',
             ],
             'retry_after' => 60,
+        ],
+
+        // EL CONTROLADOR PARA LA API POR HTTPS QUE AGREGAMOS
+        'brevo' => [
+            'transport' => 'brevo',
         ],
 
     ],

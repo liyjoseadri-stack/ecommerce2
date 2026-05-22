@@ -11,7 +11,9 @@ use App\Policies\ProductoPolicy;
 use App\Policies\UsuarioPolicy;
 use App\Policies\VentaPolicy;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
+use GuzzleHttp\Client;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +39,41 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('es-administrador', fn (Usuario $user) => $user->esAdministrador());
         Gate::define('es-gerente', fn (Usuario $user) => $user->esGerente());
         Gate::define('es-cliente', fn (Usuario $user) => $user->esCliente());
+
+        // EXTENSIÓN PARA ENVIAR CORREOS MEDIANTE LA API HTTP DE BREVO (PUERTO 443)
+        Mail::extend('brevo', function (array $config) {
+            return new class extends \Symfony\Component\Mailer\Transport\AbstractTransport {
+                protected function doSend(\Symfony\Component\Mailer\SentMessage $message): void
+                {
+                    $email = \Illuminate\Mail\Message::fromString($message->toString());
+                    
+                    $client = new Client();
+                    $client->post('https://api.brevo.com/v3/smtp/email', [
+                        'headers' => [
+                            'api-key' => env('BREVO_API_KEY'),
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                        ],
+                        'json' => [
+                            'sender' => [
+                                'name' => env('MAIL_FROM_NAME', 'MecaMensajeria'),
+                                'email' => env('MAIL_FROM_ADDRESS')
+                            ],
+                            'to' => collect($email->getTo())->map(function ($name, $address) {
+                                return ['email' => $address];
+                            })->values()->toArray(),
+                            'subject' => $email->getSubject(),
+                            'htmlContent' => $email->getHtmlBody() ?? $email->getTextBody(),
+                        ],
+                    ]);
+                }
+
+                public function __toString(): string
+                {
+                    return 'brevo';
+                }
+            };
+        });
     }
 
     protected function registerPolicies(): void
