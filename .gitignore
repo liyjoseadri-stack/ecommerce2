@@ -38,11 +38,9 @@ database.sqlite-wal
 Thumbs.db
 
 # Composer
-composer.lock
 vendor/
 
 # npm
-package-lock.json
 yarn.lock
 
 # Other

@@ -11,7 +11,7 @@ Sistema de comercio electrónico desarrollado con **Laravel 12**, implementando 
 - ✅ **Panel de Administrador** - Estadísticas y gestión de ventas
 - ✅ **Control de Acceso** - Roles de usuario (cliente, vendedor, administrador)
 - ✅ **Notificaciones** - Correos transaccionales automáticos
-- ✅ **Pruebas Automáticas** - Suite completa con 9 tests
+- ✅ **Pruebas Automáticas** - Suite completa con 14 tests
 
 ## 🛠️ Stack Tecnológico
 
@@ -147,15 +147,15 @@ php artisan test tests/Feature/TwoFactorAuthenticationTest.php
 ✓ manager can validate sale and send notifications
 ✓ database seeder matches required distribution and relationships
 
-Tests: 9 passed
+Tests: 14 passed
 ```
 
-## 📝 Pruebas Incluidas (9 tests)
+## 📝 Pruebas Incluidas (14 tests)
 
 ### Unit Tests (1)
 - ✅ `ExampleTest::that_true_is_true` - Validación básica
 
-### Feature Tests (8)
+### Feature Tests (13)
 
 | Test | Validación |
 |------|-----------|
@@ -167,6 +167,11 @@ Tests: 9 passed
 | `VentaValidationAndTicketAccessTest::only_buyer_or_manager_can_view_private_ticket` | Control de acceso a tickets |
 | `VentaValidationAndTicketAccessTest::manager_can_validate_sale_and_send_notifications` | Venta genera notificaciones |
 | `DatabaseSeederRequirementsTest::database_seeder_matches_required_distribution_and_relationships` | Seeder crea 103 usuarios correctamente |
+| `ProjectRequirementTest::login_page_responds_successfully` | Página de login responde correctamente |
+| `ProjectRequirementTest::dashboard_requires_authentication` | Dashboard redirige a usuarios no autenticados |
+| `ProjectRequirementTest::invalid_login_credentials_show_validation_error` | Login incorrecto muestra errores |
+| `ProjectRequirementTest::authenticated_user_can_access_dashboard` | Usuario autenticado accede al dashboard |
+| `ProjectRequirementTest::authorized_user_can_store_product_in_database` | Producto creado queda registrado en base de datos |
 
 ## 🔐 Credenciales de Prueba (Post-Seeder)
 
@@ -206,14 +211,19 @@ MAIL_PASSWORD=[contraseña-app]
 6. **Build command:** `composer install && php artisan migrate --force && npm install && npm run build`
 7. **Start command:** `php artisan serve --host 0.0.0.0 --port $PORT`
 
+### URL Pública
+
+Aplicación desplegada: https://ecommerce2-zt8z.onrender.com
+
 ### CI/CD Automático
 
 El repositorio incluye `.github/workflows/laravel.yml` que:
 
 ✅ Ejecuta automáticamente en cada `push` a `main`  
 ✅ Corre todas las pruebas  
-✅ Valida el código  
-✅ Despliega automáticamente si pasan las pruebas  
+✅ Valida el código antes del despliegue  
+
+El despliegue continuo se configura en Render mediante `render.yaml` y auto-deploy desde la rama `main`.
 
 Ver estado: https://github.com/NelsonPDev/ecommerce/actions
 
