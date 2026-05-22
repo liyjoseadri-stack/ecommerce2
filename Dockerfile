@@ -14,31 +14,37 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
 
-# Copiar configuración de Apache
-COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
-
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de la aplicación
-COPY . .
-
-# Instalar Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Instalar dependencias PHP
-RUN composer install --no-dev --optimize-autoloader
+# Copiar solo package.json y package-lock.json PRIMERO
+COPY package*.json ./
 
 # Instalar Node.js y npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar dependencias de Node y compilar assets
-RUN npm install --omit=dev
+# Instalar ALL dependencies (incluyendo devDependencies para build)
+RUN npm install
 
-# Compilar assets con Vite
+# Compilar assets con Vite ANTES de copiar el resto
 RUN npm run build
+
+# Copiar el resto de la aplicación
+COPY . .
+
+# Copiar configuración de Apache
+COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
+
+# Instalar Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Instalar dependencias PHP (sin dev)
+RUN composer install --no-dev --optimize-autoloader
+
+# Remover node_modules despues del build para reducir tamaño
+RUN rm -rf node_modules
 
 # Permisos de almacenamiento
 RUN chown -R www-data:www-data storage bootstrap/cache
