@@ -61,13 +61,16 @@ En la sección "Environment" de tu servicio, agrega estas variables:
 | `SESSION_DRIVER` | `database` |
 | `CACHE_STORE` | `database` |
 | `QUEUE_CONNECTION` | `database` |
-| `MAIL_MAILER` | `smtp` |
+| `MAIL_MAILER` | `log` |
 | `MAIL_HOST` | `smtp.gmail.com` |
 | `MAIL_PORT` | `587` |
 | `MAIL_ENCRYPTION` | `tls` |
 | `MAIL_USERNAME` | Tu email |
 | `MAIL_PASSWORD` | Tu contraseña de aplicación |
 | `LOG_CHANNEL` | `stack` |
+
+> **⚠️ Advertencia sobre Envío de Correos (SMTP):** El plan gratuito de Render bloquea las conexiones salientes en los puertos 25, 465 y 587 para evitar el spam. Si usas `smtp` y Gmail, recibirás un error `Connection timed out`. 
+> Se recomienda usar `MAIL_MAILER=log` para pruebas (los correos y códigos 2FA aparecerán en la pestaña Logs de Render) o integrar un servicio de correo basado en API (como Resend, SendGrid o Mailgun) si necesitas enviar correos reales.
 
 ### 5. Crear un Persistent Disk
 

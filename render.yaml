@@ -38,7 +38,7 @@ services:
       - key: LOG_CHANNEL
         value: stderr
       - key: MAIL_MAILER
-        value: smtp
+        value: log # Render Free tier blocks SMTP ports (587, 465). Using 'log' writes emails to Render dashboard logs.
       - key: MAIL_HOST
         value: smtp.gmail.com
       - key: MAIL_PORT

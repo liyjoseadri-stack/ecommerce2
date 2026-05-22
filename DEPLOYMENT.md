@@ -30,12 +30,14 @@ DB_DATABASE=ecommerce
 DB_USERNAME=[usuario]
 DB_PASSWORD=[contraseña]
 
-MAIL_MAILER=smtp
+MAIL_MAILER=log
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USERNAME=[tu-email]
 MAIL_PASSWORD=[contraseña-app]
 ```
+
+> **⚠️ Nota sobre correos en Render:** El plan gratuito de Render bloquea el tráfico de salida en puertos SMTP (25, 465, 587). Para que el sistema de 2FA no genere un error `Connection timed out`, se configura `MAIL_MAILER=log`, lo que imprimirá los códigos de acceso en la pestaña "Logs" del dashboard de Render. Para enviar correos reales, actualiza a un plan de pago o usa un servicio basado en API como Resend, Sendgrid o Mailgun.
 
 ## Paso 4: Deploy
 
