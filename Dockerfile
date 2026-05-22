@@ -28,14 +28,14 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 # Limpiar cache de npm y instalar dependencies
 RUN npm cache clean --force && npm install
 
-# Compilar assets con Vite ANTES de copiar el resto
-RUN npm run build
-
-# Copiar el resto de la aplicación
+# AHORA copiar TODO el código de la aplicación
 COPY . .
 
 # Copiar configuración de Apache
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
+
+# Compilar assets con Vite DESPUÉS de copiar todo
+RUN npm run build
 
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
