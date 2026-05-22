@@ -6,12 +6,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
-    sqlite3 \
-    libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones PHP necesarias
-RUN docker-php-ext-install pdo pdo_sqlite
+RUN docker-php-ext-install pdo pdo_mysql
 
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
@@ -25,20 +23,22 @@ WORKDIR /app
 # Copiar archivos de la aplicación
 COPY . .
 
-# Crear directorio para la base de datos SQLite
-RUN mkdir -p storage/sqlite && chmod -R 775 storage bootstrap/cache
-
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Instalar dependencias PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Instalar Node.js y dependencias de frontend
+# Instalar Node.js y npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
-    && npm install --omit=dev \
-    && npm run build
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependencias de Node y compilar assets
+RUN npm install --omit=dev
+
+# Compilar assets con Vite
+RUN npm run build
 
 # Permisos de almacenamiento
 RUN chown -R www-data:www-data storage bootstrap/cache
