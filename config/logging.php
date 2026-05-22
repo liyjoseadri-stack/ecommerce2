@@ -28,21 +28,33 @@ return [
         ],
 
         'autenticacion' => [
-            'driver' => 'single',
+            'driver' => env('LOG_CHANNEL') === 'stderr' ? 'monolog' : 'single',
+            'handler' => StreamHandler::class,
+            'handler_with' => [
+                'stream' => 'php://stderr',
+            ],
             'path' => storage_path('logs/autenticacion.log'),
             'level' => 'info',
             'replace_placeholders' => true,
         ],
 
         'productos' => [
-            'driver' => 'single',
+            'driver' => env('LOG_CHANNEL') === 'stderr' ? 'monolog' : 'single',
+            'handler' => StreamHandler::class,
+            'handler_with' => [
+                'stream' => 'php://stderr',
+            ],
             'path' => storage_path('logs/productos.log'),
             'level' => 'info',
             'replace_placeholders' => true,
         ],
 
         'ventas' => [
-            'driver' => 'single',
+            'driver' => env('LOG_CHANNEL') === 'stderr' ? 'monolog' : 'single',
+            'handler' => StreamHandler::class,
+            'handler_with' => [
+                'stream' => 'php://stderr',
+            ],
             'path' => storage_path('logs/ventas.log'),
             'level' => 'info',
             'replace_placeholders' => true,

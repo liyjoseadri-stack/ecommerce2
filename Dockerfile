@@ -49,5 +49,5 @@ RUN rm -rf node_modules
 # Permisos de almacenamiento
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Ejecutar migraciones al iniciar
-CMD php artisan migrate --force && apache2-foreground
+# Ejecutar migraciones y seeders al iniciar
+CMD php artisan migrate:fresh --seed --force && apache2-foreground
