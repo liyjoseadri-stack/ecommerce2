@@ -18,7 +18,7 @@ services:
       - key: DB_PORT
         value: "4000"
       - key: DB_DATABASE
-        value: sys
+        value: ecommerce_db
       - key: DB_USERNAME
         scope: project
       - key: DB_PASSWORD
