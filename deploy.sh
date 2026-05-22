@@ -20,13 +20,9 @@ if [ ! -d "node_modules" ]; then
     npm run build
 fi
 
-# Ejecutar migraciones
-echo "🗄️ Ejecutando migraciones..."
-php artisan migrate --force
-
-# Seedear datos iniciales (si es primera ejecución)
-echo "🌱 Ejecutando seeders..."
-php artisan db:seed --force || true
+# Ejecutar migraciones y seeders (borra la BD y la recrea en cada deploy)
+echo "🗄️ Borrando, recreando y sembrando la base de datos..."
+php artisan migrate:fresh --seed --force
 
 # Limpiar cache
 echo "🧹 Limpiando caché..."

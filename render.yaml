@@ -31,9 +31,24 @@ services:
         value: database
       - key: QUEUE_CONNECTION
         value: database
+      - key: MAIL_MAILER
+        value: smtp
+      - key: MAIL_HOST
+        value: your_mail_host # ¡ACTUALIZA ESTO! e.g., smtp.mailtrap.io
+      - key: MAIL_PORT
+        value: "587" # ¡ACTUALIZA ESTO! e.g., 2525 o 587
+      - key: MAIL_USERNAME
+        scope: project # ¡ACTUALIZA ESTO en Render!
+      - key: MAIL_PASSWORD
+        scope: project # ¡ACTUALIZA ESTO en Render!
+      - key: MAIL_ENCRYPTION
+        value: tls # O ssl, dependiendo de tu proveedor
+      - key: MAIL_FROM_ADDRESS
+        value: noreply@example.com # ¡ACTUALIZA ESTO!
+      - key: MAIL_FROM_NAME
+        value: "${APP_NAME}" # O el nombre que desees
     preDeployCommand: >
-      php artisan migrate --force &&
-      php artisan db:seed --force || true &&
+      php artisan migrate:fresh --seed --force &&
       php artisan cache:clear &&
       php artisan config:clear &&
       php artisan route:clear &&
